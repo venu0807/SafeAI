@@ -21,6 +21,22 @@ dist/
 *.onnx
 *.npy
 *.npz
+*.pb
+*.wav
+*.zip
+*.gz
+
+# ML Data & Results
+ml/processed_data/
+ml/results/
+ml/logs/
+ml/plots/
+ml/scripts/yolov8n_saved_model/
+ml/.git/
+ml/scripts/datasets/
+
+# Training metadata
+models/
 
 # Android SDK
 local.properties
@@ -42,3 +58,22 @@ platforms/
 # OS
 .DS_Store
 Thumbs.db
+.temp
+android/
+
+# Build artifacts
+platform-tools/
+build-tools/
+*.jar
+
+# ML artifacts
+ml/scripts/*.onnx
+ml/scripts/*.pt
+ml/.git/
+
+# Web artifacts
+web/node_modules/
+
+# Junk
+windows.txt
+report_padded.md
