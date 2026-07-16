@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SafeGuard AI</string>
+
+    <!-- Main Activity -->
+    <string name="protection_active">Protection Active</string>
+    <string name="protection_inactive">Protection Inactive</string>
+    <string name="enable_protection">Enable Protection</string>
+
+    <!-- Emergency -->
+    <string name="emergency_contacts">Emergency Contacts</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="no_contacts">No emergency contacts added</string>
+
+    <!-- Notifications -->
+    <string name="threat_detected">Threat Detected!</string>
+    <string name="monitoring_active">Monitoring active in background</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Permissions Required</string>
+    <string name="permission_message">This app requires microphone, location, SMS, and phone permissions to function properly.</string>
+</resources>

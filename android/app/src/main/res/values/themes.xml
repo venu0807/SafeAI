@@ -1,0 +1,51 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.SafeGuardAI" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary Brand Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+
+        <!-- Secondary (Alert/SOS) -->
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@color/on_accent</item>
+        <item name="colorSecondaryContainer">@color/accent_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_accent</item>
+
+        <!-- Tertiary (Warning) -->
+        <item name="colorTertiary">@color/status_warning</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/status_danger</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">@color/status_danger_bg</item>
+
+        <!-- Surface & Background -->
+        <item name="android:windowBackground">@color/background_adaptive</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/outline_variant</item>
+
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorTertiary">@color/text_tertiary</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/background_adaptive</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Material 3 Shape -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Material3.Corner.ExtraSmall</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Material3.Corner.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Material3.Corner.Large</item>
+
+    </style>
+
+    <style name="Theme.SafeGuardAI.NoActionBar" parent="Theme.SafeGuardAI" />
+</resources>

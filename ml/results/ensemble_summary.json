@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-06-01T19:33:39.881024",
+  "model_1": "MFCC CNN",
+  "model_2": "WAV2VEC2BERT",
+  "model_1_accuracy": 0.8846441947565543,
+  "model_2_accuracy": 0.9183520599250936,
+  "ensemble_accuracy": 0.899625468164794,
+  "accuracy_improvement": 0.014981273408239737,
+  "models_agreement_rate": 0.8524344569288389,
+  "threat_detection_rate": 0.8968565815324165,
+  "false_alarm_rate": 0.0914826498422713,
+  "total_samples": 1335,
+  "threat_samples": 1018,
+  "normal_samples": 317,
+  "mobile_actions": {
+    "IMMEDIATE_ALERT": 507,
+    "VERIFY_AND_ALERT": 414,
+    "USER_ALERT": 21,
+    "UNCERTAIN": 0,
+    "NO_ACTION": 393
+  }
+}

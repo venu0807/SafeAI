@@ -1,0 +1,13 @@
+SAFEGUARD AI - COMPLETE EVALUATION REPORT
+Generated: 2026-06-01 20:17:47
+================================================================================
+
+MODEL PERFORMANCE:
+  • Wav2Vec2BERT:      91.84% test accuracy (BEST)
+  • MFCC CNN:          88.46% test accuracy (on-device TFLite)
+  • Ensemble Voting:   89.96% test accuracy
+
+RECOMMENDATION:
+  Use MFCC CNN TFLite for on-device inference (2.06 MB, 2.24ms).
+  Use Wav2Vec2BERT for server-side/cloud inference (91.84% accuracy).
+  Ensemble both for maximum confidence in critical alerts.

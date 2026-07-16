@@ -1,0 +1,85 @@
+# =============================================================================
+# SafeguardAI — Production Docker Compose
+# =============================================================================
+version: '3.8'
+
+services:
+  # ── Redis for Rate Limiting & Cache ────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: safeguard-redis
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - safeguard-network
+
+  # ── FastAPI ML Inference Server ───────────────────────────────────────────
+  inference:
+    build:
+      context: ./ml/inference
+      dockerfile: Dockerfile
+    container_name: safeguard-inference
+    environment:
+      - MODEL_DIR=/models
+      - LOG_LEVEL=INFO
+      - PORT=8000
+      - WORKERS=2
+    volumes:
+      - ./ml/models:/models:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+    networks:
+      - safeguard-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+
+  # ── Web Dashboard (Next.js) ────────────────────────────────────────────────
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: safeguard-web
+    environment:
+      - NEXT_PUBLIC_FIREBASE_API_KEY=${NEXT_PUBLIC_FIREBASE_API_KEY}
+      - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
+      - NEXT_PUBLIC_FIREBASE_DATABASE_URL=${NEXT_PUBLIC_FIREBASE_DATABASE_URL}
+      - NEXT_PUBLIC_FIREBASE_PROJECT_ID=${NEXT_PUBLIC_FIREBASE_PROJECT_ID}
+      - NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}
+      - NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}
+      - NEXT_PUBLIC_FIREBASE_APP_ID=${NEXT_PUBLIC_FIREBASE_APP_ID}
+      - NEXT_PUBLIC_API_URL=http://inference:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - inference
+    networks:
+      - safeguard-network
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  safeguard-network:
+    driver: bridge

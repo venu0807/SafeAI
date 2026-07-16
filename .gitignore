@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files
+.env*
+!.env.example
+
+# Node / Web
+node_modules/
+.next/
+build/
+dist/
+
+# ML Model files (large binary artifacts — not for version control)
+*.h5
+*.tflite
+*.pth
+*.pt
+*.onnx
+*.npy
+*.npz
+
+# Android SDK
+local.properties
+platform-tools/
+build-tools/
+platforms/
+
+# Android build outputs
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

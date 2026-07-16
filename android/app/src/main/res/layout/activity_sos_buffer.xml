@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B71C1C"
+    android:keepScreenOn="true">
+
+    <!-- Gradient overlay for depth -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sos_gradient_overlay" />
+
+    <!-- Top warning icon area -->
+    <ImageView
+        android:id="@+id/iv_sos_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="80dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_panic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_buffer_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="EMERGENCY ALERT"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_sos_icon" />
+
+    <TextView
+        android:id="@+id/tv_buffer_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:lineSpacingExtra="6dp"
+        android:text="A potential threat was detected.\nIf you are safe, press CANCEL immediately.\nOtherwise, SOS protocols will initiate."
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:alpha="0.85"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_buffer_warning" />
+
+    <!-- Countdown display with circle background -->
+    <FrameLayout
+        android:id="@+id/fl_countdown_container"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/sos_countdown_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_buffer_desc">
+
+        <TextView
+            android:id="@+id/tv_buffer_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="72sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="seconds remaining"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:alpha="0.7"
+        app:layout_constraintEnd_toEndOf="@id/fl_countdown_container"
+        app:layout_constraintStart_toStartOf="@id/fl_countdown_container"
+        app:layout_constraintTop_toBottomOf="@id/fl_countdown_container" />
+
+    <!-- Cancel button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_buffer_cancel"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="48dp"
+        android:text="CANCEL EMERGENCY"
+        android:textColor="#B71C1C"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Instruction text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Press cancel if this is a false alarm"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toTopOf="@id/btn_buffer_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

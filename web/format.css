@@ -1,0 +1,108 @@
+@page {
+    margin-top: 1in;
+    margin-bottom: 1in;
+    margin-left: 1.5in;
+    margin-right: 1in;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt; /* Increase font size slightly to pad pages */
+    line-height: 2.0; /* Double spacing to pad pages */
+    text-align: justify;
+    color: #000;
+}
+
+h1 {
+    font-size: 20pt;
+    text-align: center;
+    font-weight: bold;
+    page-break-before: always;
+    margin-top: 1in;
+    margin-bottom: 0.5in;
+}
+
+h2 {
+    font-size: 16pt;
+    font-weight: bold;
+    margin-top: 0.5in;
+    margin-bottom: 0.25in;
+}
+
+h3 {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 0.25in;
+    margin-bottom: 0.25in;
+}
+
+.center {
+    text-align: center;
+}
+
+.front-page {
+    text-align: center;
+    font-size: 16pt;
+    line-height: 1.5;
+    page-break-after: always;
+}
+
+.front-page h1 {
+    page-break-before: avoid;
+    margin-top: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5in;
+    margin-bottom: 0.5in;
+    font-size: 12pt;
+    line-height: 1.5;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1in;
+    margin-bottom: 1in;
+}
+
+.page-break {
+    page-break-after: always;
+}
+
+/* Specific styling for cover page */
+.cover-title {
+    font-size: 20pt;
+    font-weight: bold;
+    margin: 1in 0;
+}
+
+.cover-details {
+    font-size: 14pt;
+    margin: 0.5in 0;
+}
+
+.cover-names {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 1in 0;
+}

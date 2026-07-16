@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors (Light - Trustworthy & Modern) -->
+    <color name="primary">#0A56D0</color>           <!-- Vibrant Blue - Trust -->
+    <color name="primary_dark">#0842A0</color>
+    <color name="primary_light">#D6E4FF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#D6E4FF</color>
+    <color name="on_primary_container">#001B3D</color>
+
+    <!-- SOS / Danger Colors -->
+    <color name="accent">#B3261E</color>              <!-- Material Red for SOS -->
+    <color name="accent_dark">#8C1D18</color>
+    <color name="accent_container">#F9DEDC</color>
+    <color name="on_accent">#FFFFFF</color>
+
+    <!-- UI Semantic Colors (Light) -->
+    <color name="background_adaptive">#F8F9FE</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F0F1F6</color>
+    <color name="surface_container">#EFF0F5</color>
+    <color name="surface_container_high">#E9EAF0</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1A1C1E</color>
+    <color name="text_secondary">#44474E</color>
+    <color name="text_tertiary">#8C8F98</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Status Colors -->
+    <color name="status_safe">#146C2E</color>         <!-- Green - Safe -->
+    <color name="status_safe_bg">#E6F7E9</color>
+    <color name="status_warning">#B8860B</color>      <!-- Amber - Warning -->
+    <color name="status_warning_bg">#FFF4E0</color>
+    <color name="status_danger">#B3261E</color>       <!-- Red - Danger -->
+    <color name="status_danger_bg">#FCE4EC</color>
+
+    <!-- Standard Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="green">#146C2E</color>
+    <color name="red">#B3261E</color>
+    <color name="amber">#B8860B</color>
+    <color name="gray_light">#E0E2EC</color>
+    <color name="gray_medium">#C4C6D0</color>
+    <color name="outline">#C4C6D0</color>
+    <color name="outline_variant">#E0E2EC</color>
+
+    <!-- Elevation / Shadow -->
+    <color name="shadow">#1A000000</color>
+</resources>
