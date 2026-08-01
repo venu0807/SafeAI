@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Optional
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -182,13 +182,25 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+_cors_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
-    allow_credentials=True,
+    # '*' + allow_credentials is an invalid/insecure combo. Only enable
+    # credentials when explicit origins are configured.
+    allow_origins=_cors_origins or ["*"],
+    allow_credentials=bool(_cors_origins),
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
+    """Optional API-key gate. When INFERENCE_API_KEY is set, /predict and
+    /models/switch require the matching X-API-Key header (protects the
+    inference port, which is exposed on the LAN via compose)."""
+    expected = os.environ.get("INFERENCE_API_KEY")
+    if expected and x_api_key != expected:
+        raise HTTPException(401, "Invalid or missing API key")
 
 
 # ── Request/Response Models ───────────────────────────────────────────────────
@@ -262,7 +274,7 @@ async def list_models():
 
 
 @app.post("/models/switch", response_model=HealthResponse)
-async def switch_model(req: ModelSwitchRequest):
+async def switch_model(req: ModelSwitchRequest, _: None = Depends(require_api_key)):
     """Switch active model (hot-swap)."""
     global interpreter_pool
     if registry.switch_model(req.model_name):
@@ -274,7 +286,7 @@ async def switch_model(req: ModelSwitchRequest):
 
 
 @app.post("/predict", response_model=PredictionResponse)
-async def predict(features: AudioFeatures, pool: InterpreterPool = Depends(get_interpreter_pool)):
+async def predict(features: AudioFeatures, pool: InterpreterPool = Depends(get_interpreter_pool), _: None = Depends(require_api_key)):
     """Run inference on MFCC features."""
     start = time.time()
 
