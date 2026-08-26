@@ -184,7 +184,8 @@ def export_to_tflite():
     print(f"   Size: {onnx_path.stat().st_size / 1024:.1f} KB")
 
     # Convert ONNX → TensorFlow → TFLite
-    print("\n🔄 Converting ONNX → TensorFlow → TFLite...")    try:
+    print("\n🔄 Converting ONNX → TensorFlow → TFLite...")
+    try:
         import onnx
         os.environ.setdefault('PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION', 'python')
         onnx_model = onnx.load(str(onnx_path))
