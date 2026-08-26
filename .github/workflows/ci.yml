@@ -38,6 +38,14 @@ jobs:
 
       - name: Install and Build Web Dashboard
         working-directory: web
+        env:
+          NEXT_PUBLIC_FIREBASE_API_KEY: "mock-api-key"
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "mock-app.firebaseapp.com"
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: "mock-project-id"
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: "mock-app.appspot.com"
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "123456789"
+          NEXT_PUBLIC_FIREBASE_APP_ID: "1:123456789:web:abcdef"
+          NEXT_PUBLIC_FIREBASE_DATABASE_URL: "https://mock-project-id.firebaseio.com"
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
