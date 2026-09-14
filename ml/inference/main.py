@@ -19,7 +19,11 @@ from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTEN
 import numpy as np
 
 # ── Configuration ──────────────────────────────────────────────────────────────
-MODEL_DIR = Path(os.environ.get("MODEL_DIR", "/home/venu/Proposals/SafeguardAI/ml/models"))
+# Default: the models directory shipped with this repo (…/ml/models), resolved
+# relative to this file so the server is portable across machines/containers.
+# Override with the MODEL_DIR environment variable.
+_DEFAULT_MODEL_DIR = Path(__file__).resolve().parents[1] / "models"
+MODEL_DIR = Path(os.environ.get("MODEL_DIR", str(_DEFAULT_MODEL_DIR)))
 DEFAULT_MODEL = "audio_mfcc_cnn.tflite"
 
 # ── Logging ───────────────────────────────────────────────────────────────────
