@@ -15,8 +15,26 @@ from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import CollectorRegistry, Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
 import numpy as np
+
+# Dedicated registry so re-imports (e.g. `python main.py` followed by
+# uvicorn's `import main`) never hit DuplicateTimeseries crashes.
+REGISTRY = CollectorRegistry(auto_describe=True)
+
+# ── TFLite runtime (portable import) ───────────────────────────────────────
+# Prefer the slim tflite-runtime wheel (Linux), then ai-edge-litert (its
+# successor, ships Windows wheels), then the full TensorFlow package.
+try:
+    import tflite_runtime.interpreter as _tflite
+except ImportError:
+    try:
+        from ai_edge_litert import interpreter as _tflite
+    except ImportError:
+        try:
+            from tensorflow import lite as _tflite
+        except ImportError:
+            _tflite = None  # No runtime available — pool init will fail loudly
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 # Default: the models directory shipped with this repo (…/ml/models), resolved
@@ -38,20 +56,24 @@ REQUEST_COUNT = Counter(
     "safeguardai_inference_requests_total",
     "Total inference requests",
     ["endpoint", "status"],
+    registry=REGISTRY,
 )
 REQUEST_LATENCY = Histogram(
     "safeguardai_inference_latency_seconds",
     "Inference request latency",
     ["endpoint"],
+    registry=REGISTRY,
 )
 MODEL_LOADED = Gauge(
     "safeguardai_model_loaded",
     "Whether model is loaded (1) or not (0)",
+    registry=REGISTRY,
 )
 MODEL_VERSION = Gauge(
     "safeguardai_model_version",
     "Model version info",
     ["version", "path"],
+    registry=REGISTRY,
 )
 
 # ── Model Registry ────────────────────────────────────────────────────────────
@@ -126,8 +148,17 @@ class InterpreterPool:
         self._lock = threading.Lock()
         self._init_pool()
 
+    @staticmethod
+    def _runtime():
+        if _tflite is None:
+            raise RuntimeError(
+                "No TFLite runtime installed. `pip install ai-edge-litert` "
+                "(Windows) or `tflite-runtime` (Linux)."
+            )
+        return _tflite
+
     def _init_pool(self):
-        import tflite_runtime.interpreter as tflite
+        tflite = self._runtime()
         for _ in range(self.pool_size):
             interpreter = tflite.Interpreter(model_path=str(self.model_path))
             interpreter.allocate_tensors()
@@ -138,7 +169,7 @@ class InterpreterPool:
         with self._lock:
             if self._pool:
                 return self._pool.popleft()
-        import tflite_runtime.interpreter as tflite
+        tflite = self._runtime()
         interpreter = tflite.Interpreter(model_path=str(self.model_path))
         interpreter.allocate_tensors()
         return interpreter
@@ -268,7 +299,7 @@ async def readiness_check():
 @app.get("/metrics")
 async def metrics():
     """Prometheus metrics endpoint."""
-    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
+    return Response(content=generate_latest(REGISTRY), media_type=CONTENT_TYPE_LATEST)
 
 
 @app.get("/models", response_model=list[dict])
