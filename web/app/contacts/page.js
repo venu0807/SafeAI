@@ -10,6 +10,11 @@ export default function ContactsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Firebase unconfigured (placeholder .env.local) — show empty state.
+    if (!database) {
+      setLoading(false)
+      return undefined
+    }
     const contactsRef = ref(database, 'emergency_contacts')
     const unsubscribe = onValue(contactsRef, (snapshot) => {
       const data = snapshot.val()

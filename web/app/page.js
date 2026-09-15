@@ -11,6 +11,8 @@ export default function Dashboard() {
   const [activeThreats, setActiveThreats] = useState(0)
 
   useEffect(() => {
+    // Firebase unconfigured (placeholder .env.local) — render the empty state.
+    if (!database) return undefined
     const threatsRef = ref(database, 'threats')
     const unsubscribe = onValue(threatsRef, (snapshot) => {
       const data = snapshot.val()

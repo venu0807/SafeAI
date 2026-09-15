@@ -10,6 +10,11 @@ export default function HistoryPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Firebase unconfigured (placeholder .env.local) — show empty state.
+    if (!database) {
+      setLoading(false)
+      return undefined
+    }
     const threatsRef = ref(database, 'threats')
     const unsubscribe = onValue(threatsRef, (snapshot) => {
       const data = snapshot.val()
