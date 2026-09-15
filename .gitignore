@@ -77,3 +77,8 @@ web/node_modules/
 # Junk
 windows.txt
 report_padded.md
+*.log
+
+# Python venvs (ML inference runs locally)
+.venv/
+ml/.venv/
