@@ -38,11 +38,16 @@ ml/scripts/datasets/
 # Training metadata
 models/
 
-# Android SDK
+# Android SDK & Toolchains
 local.properties
 platform-tools/
 build-tools/
 platforms/
+cmake/
+ndk/
+licenses/
+.knownPackages
+.temp/
 
 # Android build outputs
 *.apk
